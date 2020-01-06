@@ -1,0 +1,7 @@
+[
+  {
+    "name": "ebsi-test",
+    "rpcUrl": "http://52.28.190.206:8087/blockchain/besu",
+    "registry": "0x2E1f232a9439C3D459FcEca0BeEf13acc8259Dd8"
+  }
+]
