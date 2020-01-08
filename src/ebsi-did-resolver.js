@@ -3,7 +3,7 @@ import Eth from 'ethjs-query'
 import abi from 'ethjs-abi'
 import BN from 'bn.js'
 import EthContract from 'ethjs-contract'
-import DidRegistryContract from '../contracts/ethr-did-registry.json'
+import DidRegistryContract from '../contracts/ebsi-did-registry.json'
 import { Buffer } from 'buffer'
 import networksJson from './networks.json'
 const REGISTRY = '0x2E1f232a9439C3D459FcEca0BeEf13acc8259Dd8'
@@ -50,10 +50,12 @@ function wrapDidDocument (did, owner, history) {
   ]
 
   let delegateCount = 0
+  let keyCount = 1
   const auth = {}
   const pks = {}
   const services = {}
   for (const event of history) {
+    // console.log(event)
     const validTo = event.validTo
     const key = `${event._eventName}-${event.delegateType ||
       event.name}-${event.delegate || event.value}`
@@ -86,9 +88,9 @@ function wrapDidDocument (did, owner, history) {
           const encoding = match[6]
           switch (section) {
             case 'pub':
-              delegateCount++
+              keyCount++
               const pk = {
-                id: `${did}#key-${delegateCount}`,
+                id: `${did}#key-${keyCount}`,
                 type: `${algo}${type}`,
                 controller: did
               }
@@ -127,11 +129,15 @@ function wrapDidDocument (did, owner, history) {
     } else {
       if (
         delegateCount > 0 &&
-        (event._eventName === 'DIDDelegateChanged' ||
-          (event._eventName === 'DIDAttributeChanged' &&
-            bytes32toString(event.name).match(/^did\/pub\//))) &&
+        event._eventName === 'DIDDelegateChanged' &&
         validTo.lt(now)
       ) { delegateCount-- }
+      if (
+        keyCount > 1 &&
+        (event._eventName === 'DIDAttributeChanged' &&
+            bytes32toString(event.name).match(/^did\/pub\//)) &&
+        validTo.lt(now)
+      ) { keyCount-- }
       delete auth[key]
       delete pks[key]
       delete services[key]
@@ -157,7 +163,7 @@ function configureProvider (conf = {}) {
   } else if (conf.web3) {
     return conf.web3.currentProvider
   } else {
-    return new HttpProvider(conf.rpcUrl || 'https://api.ebsi.xyz/blockchain/besu')
+    return new HttpProvider(conf.rpcUrl || 'https://api.ebsi.tech.ec.europa.eu/blockchain/besu')
   }
 }
 

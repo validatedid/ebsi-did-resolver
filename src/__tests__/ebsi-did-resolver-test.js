@@ -130,7 +130,7 @@ describe('ebsiResolver', () => {
           identity,
           Secp256k1VerificationKey2018,
           delegate1,
-          2,
+          5,
           { from: owner }
         )
       })
@@ -160,13 +160,13 @@ describe('ebsiResolver', () => {
       })
     })
 
-    describe.skip('add auth delegate', () => {
+    describe('add auth delegate', () => {
       beforeAll(async () => {
         await registry.addDelegate(
           identity,
           Secp256k1SignatureAuthentication2018,
           delegate2,
-          10,
+          20,
           { from: owner }
         )
       })
@@ -197,15 +197,16 @@ describe('ebsiResolver', () => {
           ],
           authentication: [
             `${did}#key-1`,
-            `${did}#delegate-1`
+            `${did}#delegate-2`
           ]
         })
       })
     })
 
-    describe('expire automatically', () => {
+    jest.setTimeout(6000)
+    describe('expire delegate automatically', () => {
       beforeAll(async () => {
-        await sleep(3)
+        await sleep(5)
       })
 
       it('resolves document', () => {
@@ -242,7 +243,6 @@ describe('ebsiResolver', () => {
           delegate2,
           { from: owner }
         )
-        await sleep(1)
       })
 
       it('resolves document', () => {
@@ -536,7 +536,7 @@ describe('ebsiResolver', () => {
             '0x02b97c30de767f084ce3080168ee293053ba33b235d7116a3263d29f1450936b71',
             { from: owner }
           )
-          sleep(2)
+          sleep(3)
         })
         it('resolves document', () => {
           return expect(didResolver.resolve(did)).resolves.toEqual({
@@ -641,7 +641,7 @@ describe('ebsiResolver', () => {
             '-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n',
             { from: owner }
           )
-          sleep(1)
+          sleep(3)
         })
 
         it('resolves document', () => {
@@ -686,7 +686,7 @@ describe('ebsiResolver', () => {
             'https://hubs.uport.me',
             { from: owner }
           )
-          sleep(1)
+          sleep()
         })
 
         it('resolves document', () => {
@@ -735,7 +735,7 @@ describe('ebsiResolver', () => {
           10,
           { from: owner }
         ),
-        sleep(1).then(() => startMining())
+        sleep(3).then(() => startMining())
       ])
     })
 
