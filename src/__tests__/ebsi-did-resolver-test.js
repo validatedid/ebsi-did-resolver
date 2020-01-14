@@ -110,7 +110,6 @@ describe('ebsiResolver', () => {
             5,
             { from: identity }
           )
-          console.log(await didResolver.resolve(did))
         })
         it('resolves document', () => {
           return expect(didResolver.resolve(did)).resolves.toEqual({
