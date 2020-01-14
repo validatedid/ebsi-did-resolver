@@ -99,8 +99,51 @@ describe('ebsiResolver', () => {
     })
   })
 
+  describe('attributes', () => {
+    describe('add publicKey', () => {
+      describe('Secp256k1VerificationKey2018', () => {
+        beforeAll(async () => {
+          await registry.setAttribute(
+            identity,
+            stringToBytes32('did/pub/Secp256k1/veriKey'),
+            '0x02b97c30de767f084ce3080168ee293053ba33b235d7116a3263d29f1450936b71',
+            5,
+            { from: identity }
+          )
+          console.log(await didResolver.resolve(did))
+        })
+        it('resolves document', () => {
+          return expect(didResolver.resolve(did)).resolves.toEqual({
+            '@context': 'https://w3id.org/did/v1',
+            id: did,
+            publicKey: [
+              {
+                id: `${did}#key-1`,
+                type: 'Secp256k1VerificationKey2018',
+                controller: did,
+                ethereumAddress: identity
+              },
+              {
+                id: `${did}#key-2`,
+                type: 'Secp256k1VerificationKey2018',
+                controller: did,
+                publicKeyHex:
+                  '02b97c30de767f084ce3080168ee293053ba33b235d7116a3263d29f1450936b71'
+              }
+            ],
+            authentication: [
+              `${did}#key-1`
+            ]
+          })
+        })
+      })
+    })
+  })
+
+  jest.setTimeout(10000)
   describe('owner changed', () => {
     beforeAll(async () => {
+      await sleep(5)
       await registry.changeOwner(identity, owner, { from: identity })
     })
 
