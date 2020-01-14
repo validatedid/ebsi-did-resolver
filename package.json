@@ -1,6 +1,6 @@
 {
   "name": "ebsi-did-resolver",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Resolve DID documents around EBSI Besu addresses",
   "main": "dist/ebsi-did-resolver.js",
   "source": "src/ebsi-did-resolver.js",
