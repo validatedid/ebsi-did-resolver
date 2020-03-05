@@ -1,7 +1,6 @@
 ![EBSI Logo](https://ec.europa.eu/cefdigital/wiki/images/logo/default-space-logo.svg)
 
 # EBSI DID Resolver
-> EBSI did-auth protocol Typescript implementation to authenticate using EBSI DIDs.
 
 This library is intended to use EBSI Besu addresses as fully self managed [Decentralized Identifiers](https://w3c-ccg.github.io/did-spec/#decentralized-identifiers-dids) and wrap them in a [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents)
 
