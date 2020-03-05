@@ -1,19 +1,9 @@
----
-title: "Ebsi DID Resolver"
-index: 7
-category: "ebsi-did-resolver"
-type: "reference"
-source: "https://github.com/validatedid/ethr-did-resolver/blob/develop/README.md"
----
+![EBSI Logo](https://ec.europa.eu/cefdigital/wiki/images/logo/default-space-logo.svg)
 
-# ebsi DID Resolver
+# EBSI DID Resolver
+> EBSI did-auth protocol Typescript implementation to authenticate using EBSI DIDs.
 
-[![codecov](https://codecov.io/gh/decentralized-identity/ethr-did-resolver/branch/develop/graph/badge.svg)](https://codecov.io/gh/decentralized-identity/ethr-did-resolver)
-[![CircleCI](https://circleci.com/gh/decentralized-identity/ethr-did-resolver.svg?style=svg)](https://circleci.com/gh/decentralized-identity/ethr-did-resolver)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7bcde296af8e467787b04c956c2c9f6f)](https://www.codacy.com/manual/uport-project/ethr-did-resolver?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=uport-project/ethr-did-resolver&amp;utm_campaign=Badge_Grade)
-
-
-This library is intended to use Ebsi Besu addresses as fully self managed [Decentralized Identifiers](https://w3c-ccg.github.io/did-spec/#decentralized-identifiers-dids) and wrap them in a [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents)
+This library is intended to use EBSI Besu addresses as fully self managed [Decentralized Identifiers](https://w3c-ccg.github.io/did-spec/#decentralized-identifiers-dids) and wrap them in a [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents)
 
 It supports the proposed [Decentralized Identifiers](https://w3c-ccg.github.io/did-spec/) spec from the [W3C Credentials Community Group](https://w3c-ccg.github.io).
 
@@ -27,7 +17,7 @@ To encode a DID for an Ebsi Besu address, simply prepend `did:ebsi:`
 
 eg:
 
-`did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74`
+`did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74`
 
 ## DID Document
 
@@ -38,15 +28,15 @@ The minimal DID document for a an ethereum address `0xb9c5714089478a327f09197987
 ```js
 {
   '@context': 'https://w3id.org/did/v1',
-  id: 'did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a',
+  id: 'did:ebsi:0xb9c5714089478a327f09197987f16f9e5d936e8a',
   publicKey: [{
-       id: 'did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a#owner',
+       id: 'did:ebsi:0xb9c5714089478a327f09197987f16f9e5d936e8a#owner',
        type: 'Secp256k1VerificationKey2018',
-       owner: 'did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a',
+       owner: 'did:ebsi:0xb9c5714089478a327f09197987f16f9e5d936e8a',
        ethereumAddress: '0xb9c5714089478a327f09197987f16f9e5d936e8a'}],
   authentication: [{
        type: 'Secp256k1SignatureAuthentication2018',
-       publicKey: 'did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a#owner'}]
+       publicKey: 'did:ebsi:0xb9c5714089478a327f09197987f16f9e5d936e8a#owner'}]
 }
 ```
 
@@ -54,7 +44,7 @@ Note this uses the `Secp256k1VerificationKey2018` type and an `ethereumAddress` 
 
 ## Building a DID document
 
-The DID document is built by using read only functions and contract events on the [ethr-did-registry](https://github.com/uport-project/ethr-did-registry) Ethereum smart contract.
+The DID document is built by using read only functions and contract events on the `ebsi-did-registry` BESU smart contract.
 
 Any value from the registry that returns an ethereum address will be added to the `publicKey` array of the DID document with type `Secp256k1VerificationKey2018` and an `ethereumAddress` attribute containing the address.
 
@@ -147,9 +137,9 @@ A `DIDAttributeChanged` event for the identity `0xf3beac30c498d9e26865f34fcaa57d
 
 ```js
 {
-  id: "did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74#delegate-1",
+  id: "did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74#delegate-1",
   type: "Secp256k1VerificationKey2018",
-  owner: "did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74",
+  owner: "did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74",
   publicKeyHex: '02b97c30de767f084ce3080168ee293053ba33b235d7116a3263d29f1450936b71'
 }
 ```
@@ -160,9 +150,9 @@ A `DIDAttributeChanged` event for the identity `0xf3beac30c498d9e26865f34fcaa57d
 
 ```js
 {
-  id: "did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74#delegate-1",
+  id: "did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74#delegate-1",
   type: "Ed25519VerificationKey2018",
-  owner: "did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74",
+  owner: "did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74",
   publicKeyBase64: "uXww3nZ/CEzjCAFo7ikwU7ozsjXXEWoyY9KfFFCTa3E="
 }
 ```
@@ -177,12 +167,12 @@ The name of the attribute should follow this format:
 
 #### Hex encoded Secp256k1 Verification Key
 
-A `DIDAttributeChanged` event for the identity `0xf3beac30c498d9e26865f34fcaa57dbb935b0d74` with the name `did/svc/HubService` and value of the url `https://hubs.uport.me` hex encoded as `0x68747470733a2f2f687562732e75706f72742e6d65` generates a `Service` entry like this:
+A `DIDAttributeChanged` event for the identity `0xf3beac30c498d9e26865f34fcaa57dbb935b0d74` with the name `did/svc/HubService` and value of the url `https://hubs.ebsi.me` hex encoded as `0x68747470733a2f2f687562732e75706f72742e6d65` generates a `Service` entry like this:
 
 ```js
 {
   type: "HubService",
-  serviceEndpoint: "https://hubs.uport.me"
+  serviceEndpoint: "https://hubs.ebsi.me"
 }
 ```
 
@@ -192,18 +182,27 @@ The resolver presents a simple `resolver()` function that returns a ES6 Promise 
 
 ```js
 import { Resolver } from 'did-resolver'
-import getResolver from 'ethr-did-resolver'
+import getResolver from 'ebsi-did-resolver'
 
 // You can set a rpc endpoint to be used by the web3 provider
-// You can also set an address for your own ethr-did-registry contract
-const providerConfig = { rpcUrl: 'https://rinkeby.infura.io/ethr-did', registry: registry.address }
+// You can also set an address for your own ebsi-did-registry contract
+const providerConfig = { rpcUrl: 'https://api.intebsi.xyz/blockchain/besu', registry: registry.address }
 
 // getResolver will return an object with a key/value pair of { "ethr": resolver } where resolver is a function used by the generic did resolver. 
 const ethrDidResolver = getResolver(providerConfig)
 const didResolver = Resolver(ethrDidResolver)
 
-didResolver.resolve('did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74').then(doc => console.log)
+didResolver.resolve('did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74').then(doc => console.log)
 
 // You can also use ES7 async/await syntax
-const doc = await didResolver.resolve('did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74')
+const doc = await didResolver.resolve('did:ebsi:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74')
 ```
+## Licensing
+
+Copyright (c) 2019 European Commission  
+Licensed under the EUPL, Version 1.2 or - as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence"); 
+You may not use this work except in compliance with the Licence. 
+You may obtain a copy of the Licence at: 
+* https://joinup.ec.europa.eu/page/eupl-text-11-12  
+
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Licence for the specific language governing permissions and limitations under the Licence.
