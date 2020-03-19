@@ -26,7 +26,7 @@
     "prepublishOnly": "npm test && npm run build",
     "release": "semantic-release --debug",
     "test": "jest",
-    "test-with-coverage": "jest --coverage && codecov"
+    "test-with-coverage": "jest --coverage --reporters=jest-sonar"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
@@ -34,7 +34,15 @@
     "testURL": "http://localhost/",
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
-    }
+    },
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "json",
+      "text",
+      "clover",
+      "cobertura"
+    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
@@ -59,7 +67,8 @@
     "regenerator-runtime": "^0.13.2",
     "semantic-release": "^15.13.27",
     "standard": "^13.0.2",
-    "truffle-contract": "^3.0.7"
+    "truffle-contract": "^3.0.7",
+    "jest-sonar": "^0.2.5"
   },
   "dependencies": {
     "buffer": "^5.1.0",

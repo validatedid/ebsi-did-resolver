@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone repo') {
+            steps {
+               checkout scm;
+            }
+        }
+        stage('Test') {
+            steps{
+                sh "npm install"
+                sh "npm run test-with-coverage"
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner/bin/sonar-scanner -Dsonar.host.url=https://infra.ebsi.xyz/sonar -Dsonar.projectName=3-ebsi-did-resolver -Dsonar.projectVersion=1.0 -Dsonar.projectKey=3-ebsi-did-resolver -Dsonar.sources=. -Dsonar.projectBaseDir=/var/lib/jenkins/workspace/3-ebsi-did-resolver"
+            }
+        }
+    }
+}
